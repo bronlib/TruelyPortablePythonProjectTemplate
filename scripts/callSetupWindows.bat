@@ -10,7 +10,7 @@ set source_dirs=source\src source\tests
 
 set STARTDIR="%~dp0"
 
-set target_pythondir="%~dp0..\..\Python%target_version%"
+set target_pythondir="%~dp0..\..\win_Python%target_version%"
 
 ::the pyenv that will be used:
 set pyenv_gi_url="https://github.com/pyenv-win/pyenv-win/archive/refs/heads/master.zip"

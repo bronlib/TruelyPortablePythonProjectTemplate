@@ -9,6 +9,7 @@ _build/
 logs/
 __pycache__/
 .idea/
+.vscode/
 
 generatedDOSScripts/
 generatedbashscripts/
