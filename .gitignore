@@ -11,6 +11,7 @@ __pycache__/
 .idea/
 
 generatedDOSScripts/
+generatedbashscripts/
 
 #include only the parts in the python runtime that change after installs
 /Python*

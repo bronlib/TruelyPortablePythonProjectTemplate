@@ -392,7 +392,7 @@ def create_sh_file(do_pytest, generatedScripts, i, ispy=True ):
         PYTHONCODEPATH_SET_REL.append(os.path.relpath(j, modulepath))
 
     ff = find_modpath(i)
-    logging.debug("Python file {:s}".format(ff))
+    logging.debug("Python file {}".format(ff))
     if ispy:
         file_name = "py." + ".".join(ff)
     else:

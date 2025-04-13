@@ -7,10 +7,10 @@ PATH=.:$PATH
 
 
 toget=3.11.0
-source_dirs="source/src  source/test"
+source_dirs="source source/src  source/test"
 target_dir=../../
 
-target_python=${target_dir}Python${toget}
+target_python=${target_dir}lin_Python${toget}
 
 current_dir=`pwd`
 
@@ -18,11 +18,10 @@ echo " The target python is $target_python"
 
 
 test_dir(){
-  echo " $1" 
   if [ -d "$1" ]; then
-     echo " exists  "
+     echo " $1 exists  "
   else
-     echo " does not exist "
+    echo "$1 does not exist "
     mkdir "$1"
 fi
  
@@ -31,38 +30,48 @@ fi
 
 for name in $source_dirs
 do
+   echo "handling $name "
    test_dir  ${target_dir}$name
 done
 
 
 get_python(){
 
-	command -v git >/dev/null 2>&1 ||
-	{ echo >&2 "Git is not installed. Please install..";
-	  exit 1
-	}
+   if [ ! -d "pyenv-master" ] ; then
+      if [ !-f pym.zip ] ; then
+	     curl -L  https://github.com/pyenv/pyenv/archive/refs/heads/master.zip --output pym.zip
+      fi
+	  if [ ! -f pym.zip ] ; then
+	     echo "pyenv master not downloaded"
+		 exit 1
+	  fi 
+	  
+	  command -v unzip >/dev/null 2>&1 ||
+      { echo >&2 "unzip is not installed. Please install unzip";
+        exit 1
+      }
+	  
+	  unzip pym.zip
+      if [ ! -d "pyenv-master" ] ; then
+         echo "The zip file was not pyenv-master"
+	     exit 1
+	  fi 
+      
+   fi 
 
-       echo " Git is installed" 
-
-       if [ -d "pyenv" ] 
-       then
-             echo " Pyenv exists"
-       else
-           git clone  https://github.com/pyenv/pyenv.git pyenv
-       fi 
-
-       pyenv/plugins/python-build/bin/python-build $toget  $target_python
-       rm -rf   pyenv
+   pyenv-master/plugins/python-build/bin/python-build $toget  $target_python
+   rm -rf  pyenv-master
+   rm pym.zip
 
 }
 
 test_python(){
  echo " $1" 
-  if [ -d "$1" ]; then
+  if [ -d "$1" ] ; then
      echo "$1 exists  "
   else
      echo "$1 needs to be downloaded"
-    get_python
+     get_python
 fi
 }
 
