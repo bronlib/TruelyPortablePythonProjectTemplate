@@ -10,6 +10,7 @@ logs/
 __pycache__/
 .idea/
 .vscode/
+.DS_Store/
 
 generatedDOSScripts/
 generatedbashscripts/
