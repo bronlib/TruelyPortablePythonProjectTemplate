@@ -38,7 +38,7 @@ done
 get_python(){
 
    if [ ! -d "pyenv-master" ] ; then
-      if [ !-f pym.zip ] ; then
+      if [ ! -f pym.zip ] ; then
 	     curl -L  https://github.com/pyenv/pyenv/archive/refs/heads/master.zip --output pym.zip
       fi
 	  if [ ! -f pym.zip ] ; then
