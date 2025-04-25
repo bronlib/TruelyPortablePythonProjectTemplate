@@ -6,16 +6,16 @@
   The Portable root consists of three or more subdirectorties:
   
   root -+- source     # as many package directories as you want...each can be a git..your GIT
-        +- PythonX.YZ # Python distribution
+        +- win_PythonX.YZ # Python distribution
         +- ThisGIT -+- scripts
                     +- packages
                      
 
- In the case of Linux-based systems, assumed is that the protable runtime
+ In the case of Linux-based systems, assumed is that the portable runtime
  is a directory copied from the pyenv "versions"  directory
 
  the structure is:
-      <number> -+- bin
+  lin_<number> -+- bin
                 +- include
                 +- lib
                 +- share
@@ -55,7 +55,7 @@ def command_run(command):
     return commandlist_run(cmd)
 
 from customize_me import PROJECTSCRIPTS, THISPROJECT,  PROJECTPACKAGES, PYTHON_SOURCE_SET, \
-                         PYTHONRUNTIME, PYTHONEXE, PYTHON_SCRIPTS_EXE
+                         PYTHONRUNTIME, PYTHONEXE_NAME, PYTHONRUNTIME_PATH
 
  
 PYTHONHELPERDIR = os.path.abspath(os.path.join(PROJECTPACKAGES, "handy_modules"))
@@ -70,11 +70,10 @@ if platform.system() == "Windows":
 
     PATH="%PATH%"
 
-    PYTHONEXEPATH = os.path.abspath(os.path.join(PYTHONRUNTIME, PYTHONEXE))
-    PYTHONCODEPATH_SET += [PYTHONRUNTIME]
-    PYTHONCODEPATH_SET += ["{:s}\\Lib".format(PYTHONRUNTIME)]
-    PYTHONCODEPATH_SET += ["{:s}\\Lib\\site-packages".format(PYTHONRUNTIME)]
-    PYTHONCODEPATH_SET += ["{:s}\\Scripts".format(PYTHONRUNTIME)]
+    PYTHONCODEPATH_SET += [PYTHONRUNTIME_PATH]
+    PYTHONCODEPATH_SET += ["{:s}\\Lib".format(PYTHONRUNTIME_PATH)]
+    PYTHONCODEPATH_SET += ["{:s}\\Lib\\site-packages".format(PYTHONRUNTIME_PATH)]
+    PYTHONCODEPATH_SET += ["{:s}\\Scripts".format(PYTHONRUNTIME_PATH)]
 
 else:
     
@@ -82,11 +81,10 @@ else:
     PATH = "$PATH"
     a = sys.version_info
     pythonversion = "python{:s}.{:s}".format(str(a[0]), str(a[1]))
-    PYTHONEXEPATH = os.path.abspath(os.path.join(PYTHONRUNTIME, PYTHONEXE))
+  
+    PYTHONLIBDIR = os.path.abspath(os.path.dirname(PYTHONRUNTIME_PATH))
 
-    PYTHONLIBDIR = os.path.abspath(os.path.dirname(PYTHONRUNTIME))
-
-    PYTHONCODEPATH_SET += [PYTHONRUNTIME]
+    PYTHONCODEPATH_SET += [PYTHONRUNTIME_PATH]
     PYTHONCODEPATH_SET += ["{:s}/lib/{:s}".format(PYTHONLIBDIR, pythonversion)]
     PYTHONCODEPATH_SET += ["{:s}/lib/{:s}/site-packages".format(PYTHONLIBDIR, pythonversion)]
 
@@ -107,11 +105,11 @@ for dir in to_check :
     
 #check correctness
 
-if not os.path.isfile(PYTHON_SCRIPTS_EXE):
-    error = "can't find python executable: {:s}".format(PYTHON_SCRIPTS_EXE)
+if not os.path.isfile(PYTHONRUNTIME):
+    error = "can't find python executable: {:s}".format(PYTHONRUNTIME)
     print(error)
     raise Exception(error)
-print("Python executable: {:s}".format(PYTHON_SCRIPTS_EXE))
+print("Python executable: {:s}".format(PYTHONRUNTIME))
 
 
 

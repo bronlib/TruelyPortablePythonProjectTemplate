@@ -36,7 +36,7 @@ def fixup_path(oldpath):
     return ret
 
 from generic_setup import PYTHONRUNTIME, PATH, \
-    PYTHONSCRIPTS, PYTHONCODEPATH_SET, PYTHONEXE, PYTHON_SOURCE_SET
+    PYTHONSCRIPTS, PYTHONCODEPATH_SET, PYTHONRUNTIME, PYTHON_SOURCE_SET
 
 
 PYTHONSOURCECODE = PYTHON_SOURCE_SET[0]
@@ -352,9 +352,9 @@ def create_dos_file(do_pytest, generatedScripts, i, ispy=True):
         else:
             f.write("\n::add START /min if the DOS box is to be seen, or /B if there can be no dosbox\n")
             if modulename.endswith(".py"):
-               f.write("{:s} {:s} %* \n".format(PYTHONEXE,  modulename))
+               f.write("{:s} {:s} %* \n".format(PYTHONRUNTIME,  modulename))
             else:
-                f.write("{:s} -m {:s} %* \n".format(PYTHONEXE, modulename))
+                f.write("{:s} -m {:s} %* \n".format(PYTHONRUNTIME, modulename))
     else:
         f.write('jupyter-notebook.exe  {:s}.ipynb\n'.format(modulename))
     f.write("PUSHD %CALLEDDIR%\n")
@@ -425,9 +425,9 @@ def create_sh_file(do_pytest, generatedScripts, i, ispy=True ):
             f.write('py.test {:s}.py  \n'.format(modulename))
         else:
             if modulename.endswith(".py"):
-               f.write("{:s} {:s}\n".format(PYTHONEXE,  modulename, all))
+               f.write("{:s} {:s}\n".format(PYTHONRUNTIME,  modulename, all))
             else:
-                f.write("{:s} -m {:s}\n".format(PYTHONEXE, modulename, all))
+                f.write("{:s} -m {:s}\n".format(PYTHONRUNTIME, modulename, all))
     else:
         f.write('jupyter-notebook  {:s}.ipynb\n'.format(modulename))
     f.write("\n\ncd $START\n")

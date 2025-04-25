@@ -41,15 +41,16 @@ precondition at this point is that the PYTHON_SOURCE_SET only includes the folod
 
 
 if "source_dirs" in os.environ:
-    print(f"source_dirs: {os.environ['source_dirs']}")
-    setof = os.environ["source_dirs"].split(" ")
+    print(f"source_dirs in env: {os.environ['source_dirs']}")
+    setof = os.environ["source_dirs"].strip().split(" ")
     print(f"Set of: {setof}")
     for i in setof:
         PYTHON_SOURCE_SET.append(os.path.join(PORTABLROOT,i))
 else:
-    print(f"source dirs: None")
+    print(f"source dirs")
     for i in os.listdir(PORTABLROOT):
-        if i.startswith("Python"):
+        if i.startswith("win_Python") or \
+        i.startswith("lin_Python"):
             continue
         if i == os.path.basename(THISPROJECT):
             continue
@@ -57,19 +58,17 @@ else:
         if os.path.isdir(toadd):
             PYTHON_SOURCE_SET.append(toadd)
 
-print(f"Python source set: {PYTHON_SOURCE_SET}")
-
+print(f"Python source set:")
+for i in PYTHON_SOURCE_SET:
+    print(i)
 
 """"
 postcondition: PYTHON_SOURCE_SET contains the set of absolute folder paths that are to be in the 
 PYTHONPATH
 """
+print(f" executable : {sys.executable}")
+PYTHONRUNTIME      = os.path.abspath(sys.executable)
+PYTHONEXE_NAME     = os.path.basename(PYTHONRUNTIME)
+PYTHONRUNTIME_PATH = os.path.abspath(os.path.dirname(PYTHONRUNTIME))
 
-PYTHONRUNTIME = os.path.abspath(os.path.dirname(sys.executable))
-if platform.system() == "Windows":
-    PYTHONEXE = "python.exe"
-else:
-    PYTHONEXE = "python3"
-
-
-PYTHON_SCRIPTS_EXE = os.path.abspath((os.path.join(PYTHONRUNTIME, PYTHONEXE)))
+print(f"PYTHONRUNTIME  ={PYTHONRUNTIME}")

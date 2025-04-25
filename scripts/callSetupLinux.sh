@@ -6,8 +6,17 @@ PATH=.:$PATH
 #and the list of source directories at the top level
 
 
-toget=3.11.0
-source_dirs="source source/src  source/test"
+toget=3.13.2
+source_dirs="source/src source/test"
+main_source="source  "
+
+export source_dirs
+
+all_source_dirs=${main_source}${source_dirs}
+
+echo " source_dirs = $source_dirs, "
+echo " all = $all_source_dirs"
+
 target_dir=../../
 
 target_python=${target_dir}lin_Python${toget}
@@ -28,7 +37,7 @@ fi
 }
 
 
-for name in $source_dirs
+for name in $all_source_dirs
 do
    echo "handling $name "
    test_dir  ${target_dir}$name

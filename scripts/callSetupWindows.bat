@@ -1,7 +1,7 @@
 @echo OFF
 
 :: state the python version you wish to use
-set target_version=3.10.0
+set target_version=3.13.2
 
 :: directories that are to be added to PYTHONPATH. Same level as Python
 set source_dirs=source\src source\tests
