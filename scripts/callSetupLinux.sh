@@ -7,7 +7,7 @@ PATH=.:$PATH
 
 
 toget=3.13.2
-source_dirs="source/src source/test"
+source_dirs="source/src source/tests"
 main_source="source  "
 
 export source_dirs
