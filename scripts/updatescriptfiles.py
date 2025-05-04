@@ -373,9 +373,11 @@ def create_sh_file(do_pytest, generatedScripts, i, ispy=True ):
     if platform.system() == 'Darwin':
         all = "$@"
         shelltype = "bash"
+        file_ext=".command"
     else:
         all = "$@"
         shelltype = "bash"
+        file_ext=".sh"
 
     modulename = os.path.basename(i)
     modulepath = os.path.dirname(i)
@@ -399,9 +401,13 @@ def create_sh_file(do_pytest, generatedScripts, i, ispy=True ):
         file_name = "jp." + ".".join(ff)
 
     logging.debug("\n\ni={}   file_name={}\n\n".format(i, file_name))
-    f = open(os.path.join(generatedScripts, file_name + ".sh"), "w")
+    f = open(os.path.join(generatedScripts, file_name + file_ext), "w")
 
     f.write("#!/usr/bin/env {:s}\n\n".format(shelltype))
+    
+    if platform.system() == 'Darwin':
+        f.write('cd "$(dirname "$0")"\n')
+        
     f.write("START=`pwd`\n")
     f.write("\ncd {:s}\n".format(PYTHONCODE_SCRIPTS_REL))
     f.write("HERE=`pwd`\n")
@@ -431,6 +437,10 @@ def create_sh_file(do_pytest, generatedScripts, i, ispy=True ):
     else:
         f.write('jupyter-notebook  {:s}.ipynb\n'.format(modulename))
     f.write("\n\ncd $START\n")
+    
+    if platform.system()=='Darwin':
+        f.write("\nexec $SHELL\n")
+    
     #f.write("bash")
     f.close()
 
