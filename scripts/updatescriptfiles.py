@@ -445,7 +445,7 @@ def create_sh_file(do_pytest, generatedScripts, i, ispy=True ):
     f.close()
 
 
-DOSSTART="""
+DOSSTART=r"""
 @echo off
 :: First step is just to capture the directory in which this scripted was called, 
 :: in order to restore this at the end...
@@ -462,7 +462,7 @@ set CURRENTDIR=%~dp0
 """
 
 
-DOSBLOCK="""
+DOSBLOCK=r"""
 
 GOTO:END
 
