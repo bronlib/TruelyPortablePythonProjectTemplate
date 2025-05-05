@@ -250,7 +250,7 @@ def CreateScripts():
 
         pre = "dos"
 
-        generatedScripts = os.path.join(PYTHONSCRIPTS, "generatedDOSScripts")
+        generatedScripts = os.path.join(PYTHONSCRIPTS, "generatedDOSscripts")
 
         if os.path.isfile(generatedScripts):
             os.remove(generatedScripts)
@@ -266,9 +266,9 @@ def CreateScripts():
 
     else:
         if platform.system() == 'Darwin':
-            pre="bash"
+            pre="COMMAND"
         else:
-            pre="bash"
+            pre="BASH"
 
         generatedScripts   = os.path.join(PYTHONSCRIPTS, "generated{}scripts".format(pre))
 

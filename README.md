@@ -1,24 +1,24 @@
-# Sharing Python Programs version 1.01
+# Sharing Python Programs version 1.4
 **Technology stack** 
 
 Pure Python.
 
 **Description**: 
 
-This project was started out of the need to be able to develop and use Python without installation and the ability
-to professionally collaborate simultaneously with different teams each using their own version of Python. 
+This project was initiated out of the need to develop and share Python code, without having to install it, and the need to professionally collaborate simultaneously with different teams each using their own version of Python and their own set of Python packages. 
 
-In this situation working with a single installed Python was not an option because of the different configuraitons 
-needed of the same version of Python, nor was working with Python's virtual environemnt was an option because 
-of two reasons:
-* 1)There was a project (on windows) which needed special DLLs in the main distribution
-* 2)There were also projects using different versions of Python: so you needed two different Pythons distributions 
-that are simultaneoulsy available. Of course the project pyenv theoretically covers this, however it also fell short
-due to (1). 
+When developing Python code for others to use as an application, you do not want to burdon them with having to install Python and process a "requirements.text" file to install the packages, especially when considering that some packages need special tools for compliation. Also, packages over time change and can cause conflicts with other packages. It is also not possible to create a single "exe" of just any Python application, and even if you can, it is also unhandy so resend large exe file if you whant to perform a minor update. That is when keeping the project in source code is easier. 
 
-Also having a single directory that contains a self-contained (batteries included) portable Python project, was
-essential in a large professional project that involved the cooperation of Python developers and developers of a 
-different platform who had no Python knowledge but needed the Python application for development. 
+When professionally collaborating, not every project with work with the same Python version, or set of Python packages. It is possible to switch between Python distributions with "pyenv", but it is not practical to "switch-edit-switch" many times a day and also special DLLs may be needed, and they need to land in the Python distribution itself, making that distribution unattractive for other projects. 
+
+To utilize Python's own virtual environemnt for my many projects was also unpractical for two reasons:
+1) There was a project (on windows) which needed special DLLs in the main distribution
+2) There were also projects using different versions of Python: so you needed two different Pythons distributions 
+that are simultaneoulsy available. 
+
+The simple solution to all of the problems was to have a single self-contained (batteries included) portable Python project.
+
+Yes, that does mean that each project has its own copy of a Python Distribution, but that is kilo-bytes while the installed directory is megabytes. So the cost of trying to save some disc space does not weight up to the time savings of easy distribution and colloaboration. 
 
 That meant, ofcourse, that the entire portable python directory, was in a single GIT. I  realize that some
 GIT as "not done" to place executables in GIT, but it worked very well. Naturally the GIT repository was then 
@@ -48,24 +48,14 @@ and know that only the target
 **Key Concepts**
 
 * In order to exchange a Python application not only is the application itself needed, but also all of the libraries it depends on. That means that many libraries may have to be installed for a particular application to run. If a user does not want their single Python distribution to be cluttered up, they need to use either a Python Virtual Environment or a user environment which could easily be reset. A third alternative is use a Python distribution per application, realizing that the Python Distribution itself is a fraction of the size of a large application. 
-* Libraries may contain specific DLL�s that have to be placed in specific places in the Python distribution. Other libraries may have version dependencies which may only be met with specific orders of installation and may not work with other libraries already installed. These issues call for one Distribution or Virtual or User environment per application. The downside of a user environment is that it poorly handles DLLs, leaving either separate distribution or virtual environment per application as viable solutions. 
+* Libraries may contain specific DLL's that have to be placed in specific places in the Python distribution. Other libraries may have version dependencies which may only be met with specific orders of installation and may not work with other libraries already installed. These issues call for one Distribution or Virtual or User environment per application. The downside of a user environment is that it poorly handles DLLs, leaving either separate distribution or virtual environment per application as viable solutions. 
 * In practice, such libraries may not be installable via PIP, and the DLLs may have to reside in the Python distribution. Also, not all Python applications can be reduced to a single exe. These factors imply that the most versatile exchange format for Python is one that includes the Python distribution itself.  The conclusion is that the most certain way to distribute an application is by including the distribution itself. 
 * When distributing an application to a user who is more interested in the application than the language its implemented in, the simple guarantee that it will work, no matter if on a memory stick or placed in the PC is essential. Having to install it, may feel intrusive to the customer or even bring risks that the installation may be unsuccessful. A Python Virtual Environment is not portable, but has to be updated every time its placed in a new location. The only portable solution is delivery with the Python Distribution itself. 
 
 
 ## Dependencies
 
- This project assumes that "git" is installed. On Windows, there are at least these two:
- * https://git-scm.com/download/win
- * https://gitforwindows.org/
-
-On linux git can be downloaded via the command:
- * apt-get install git
-
- Git is used to download the latest version pyenv. On linux Os's also the libraries needed to compile
-Python need to be installed, these are described in:
-
-https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+The scripts assumes internet access and the availability of "pyenv" to create the Python Distribution. On Windows, the scripts use "curl" to download and "tar" to expand pyenv, which are both standard tools on Windows. On linux and MacOs, the scripts use "curl" and "unzip", of which "unzip" may have to be installed on linux. For MacOs, both are standard. 
 
 For the rest, this project is build on a combination of OS scripting files
 and Python files. Scripting files are used for basic 
@@ -78,18 +68,15 @@ the end-user to work with Python in a porable manner, this project
 could have been entirely written in an OS depdendent scripting language.
 
 But because I am not an expert in the different OS scripting languages,
-I wrote the main chunck in Python and used the OS depedent scripts
-only for launching that chunk of Python. 
+I wrote the main chunck in Python and used the OS depedent scripts for creating the directory structure and downloading Python. 
 
 
 **Status**
 
-The main part in the OS scripting, is used for downloading
-the targetted Python Distribution using pyenv. This is well
-worked out for Windowns, but not yet for the Linux based OSes. 
+I recently updated the pyenv part, so now pyenv is properly used in both linux as windows environments. 
+I also recently added the ".command" file support in MacOs, so that, like on windows, all scripts can be launched by a simple mouse click, instead of having to revert to prompt. 
 
-The windows scripts have recently been updated to also support 
-UNC paths: the ability to call them while residing on a 
+The windows scripts support UNC paths: the ability to call them while residing on a 
 network drive. It works, but in practice is very slow, 
 due to network speeds.
 The utilities, to get PIP, and update PIP and SetupTools 
@@ -128,7 +115,7 @@ If used from scratch, then a logical structure would be the following:
 >       Portable_Root/
 >       |--- Python_Distribution/
 >       |----source/ 
->       |----portablizer/   {This Git}
+>       |----portable/   {This Git}
 >    
 
 In which the user's new Python code is place under "source", which itself could be a git. 
@@ -151,7 +138,7 @@ resulting in:
 >       |----|---src/
 >       |----|---test/
 >       |----|---doc/
->       |----portablizer/{This Git}
+>       |----portable/{This Git}
 >    
 
 Because I expect this to be the most prominate use-case, this configuration can 
@@ -187,7 +174,7 @@ version number of Python to be used:
 Windows:
 >set target_version=3.9.4
 
-Linux:
+Linux & Mac:
 >target_version=3.9.4
 
 and "source_dirs" stores the set of the user's needed "PYTHONPATH"s
@@ -195,7 +182,7 @@ and "source_dirs" stores the set of the user's needed "PYTHONPATH"s
 Windows:
 >set source_dirs=source\src source\tests
 
-Linux: 
+Linux & Mac: 
 >source_dirs="source/src  source/test"
 
 Once "source_dirs" and "target_version" are configured, the appropiate script, callSetupXXX, 
@@ -203,13 +190,31 @@ can be called and,
 if successful, a new directory will be created under portabizer/scripts, depending on 
 the OS.
 
-Under Windows, the new directory will be called: "generatedDOSScripts".
+On Windows click on 
+>callSetupWindows.bat
+
+And the directory structure and Python Distribution will be created and a new directory of scripts will be created:
+>generatedDOSscripts
+
+
+On Mac, click on 
+>callSetupMac.command
+
+And the directory structure and Python Distribution will be created and a new directory of scripts will be created:
+>generatedCOMMANDscripts
+
+On Linux, launch
+>callSetupLinux.sh
+
+And the directory structure and Python Distribution will be created and a new directory of scripts will be created:
+>generatedBASHscripts
+
 
 For each Python module found in the PYTHONPATH, besides those in 'site-packages', a 
 script file is created by which that module can be called in a portable way. 
 
 If new Python files are creted, callSetupXXX should be called again and the directory
-"generateXXXScripts" will be updated 
+"generateXXXscripts" will be updated 
 
 To reframe, when one begins, one can either pull or copy the git in a directory, whose
 name is arbitrary as is the directory name given to this git. This is because a 
