@@ -4,8 +4,26 @@
 
 The scripts folder contains the heart of code that enables portabililty. 
 
-It creates either windows DOS scripts or Linux (OS-x) shell scripts that call a Python
-modules via relative paths, they can be called independently of the location of 
+To create or update the portability scripts, on windows click on:
+>callSetupWindows.bat
+
+..and the directory:
+>generatedDOSscripts
+
+will be created.On Mac, click on:
+>callSetupMac.command
+
+and the directory:
+>generatedCOMMANDscripts
+
+will be created.On linux launch:
+>callSetupLinux.sh
+
+>generatedBASHscripts
+
+will be created/
+
+All of the scripts call the modules are called via relative paths, they can be called independently of the location of 
 the "Portable Root" folder: the folder containing the users'sources and Python 
 distributions. This is the simple key to portability: the creation of scripts
 with paths relative to the Python distribution. 
@@ -13,7 +31,4 @@ with paths relative to the Python distribution.
 In Windows, the Python Distribution is completely self contained and can 
 be placed on any other Windows PC with the same version of Windows.
 
-For linux it is more complex because not all build dependencies may be contained
-in the Python distribution. This tool must be updated to make it
-the Portable Root also portable in a linux environment: having relative 
-scripts is just a start and solves only a part of the problem.
+For linux and Mac, it is less clear. It is theoretically possible, as it is done by Briefcase. I do not yet have enough experience with it. 

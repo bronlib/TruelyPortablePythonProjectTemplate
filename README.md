@@ -294,7 +294,8 @@ Nothing needs to be �installed�.
 
 ## Known issues
 
-Document any known significant shortcomings with the software.
+There may be portability issues on Mac & linux.
+
 
 ## Contact / Getting help
 
