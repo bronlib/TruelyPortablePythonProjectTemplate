@@ -57,7 +57,7 @@ and know that only the target
 
 The scripts assumes internet access and the availability of "pyenv" to create the Python Distribution. On Windows, the scripts use "curl" to download and "tar" to expand pyenv, which are both standard tools on Windows. On linux and MacOs, the scripts use "curl" and "unzip", of which "unzip" may have to be installed on linux. For MacOs, both are standard. 
 
-For the rest, this project is build on a combination of OS scripting files
+For the rest, this project is build on a combination of OS scripting files (bash/bat)
 and Python files. Scripting files are used for basic 
 configuration and the Python files, given the configurations,
 create OS dependent scripting files by which Python 
