@@ -57,7 +57,9 @@ and know that only the target
 
 The scripts assumes internet access and the availability of "pyenv" to create the Python Distribution. On Windows, the scripts use "curl" to download and "tar" to expand pyenv, which are both standard tools on Windows. On linux and MacOs, the scripts use "curl" and "unzip", of which "unzip" may have to be installed on linux. For MacOs, both are standard. 
 
-For the rest, this project is build on a combination of OS scripting files (bash/bat)
+On Mac & Linux, parts of the Python distribution must be build. So before attempting to install Python for the first time on Mac & Linux, please [**Install Python build dependencies**](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) first.
+
+For the rest, this project is build on a combination of OS scripting files (bash/dos)
 and Python files. Scripting files are used for basic 
 configuration and the Python files, given the configurations,
 create OS dependent scripting files by which Python 
@@ -67,7 +69,7 @@ Because this project "only" creates OS dependent scripts which allows
 the end-user to work with Python in a porable manner, this project
 could have been entirely written in an OS depdendent scripting language.
 
-But because I am not an expert in the different OS scripting languages,
+But because I am not an expert in the different OS scripting languages (bash, dos),
 I wrote the main chunck in Python and used the OS depedent scripts for creating the directory structure and downloading Python. 
 
 
@@ -89,7 +91,8 @@ The directory structure of this GIT is:
 
 >       This Git/
 >       |----scrips/
->       |----|----callSetupLinux.sh
+>       |----|----callSetupLinux.
+>       |----|----callSetupMac.command
 >       |----|----callSetupWindows.bat
 >       |----|----customize_me.py
 >       |----|----generic_setup.py
@@ -146,7 +149,7 @@ be found in the default version of the configuration.
 
 The only file that needs to be configured is then either:
 
-For Linux based OS's:
+For Linux and Mac based OS's:
 * [scripts/callSetupLinux.sh](scripts/callSetupLinux.sh)
 
 For Windows:
@@ -209,24 +212,23 @@ On Linux, launch
 And the directory structure and Python Distribution will be created and a new directory of scripts will be created:
 >generatedBASHscripts
 
-
-For each Python module found in the PYTHONPATH, besides those in 'site-packages', a 
-script file is created by which that module can be called in a portable way. 
+For each Python module found in the PYTHONPATH, besides those in 'site-packages', a portable script file is created. "Portable" means here, that this script will still work if the entire "Portable-Root" is moved. With a simple single-line modification, a developer can place an important script higher in the portable tree to make it easily accessable for a potential user.
 
 If new Python files are creted, callSetupXXX should be called again and the directory
-"generateXXXscripts" will be updated 
+"generateXXXscripts" will be updated and no other directories will be modified.
 
 To reframe, when one begins, one can either pull or copy the git in a directory, whose
 name is arbitrary as is the directory name given to this git. This is because a 
 Python program or script can discover the directory name it is called in.
 
 So the directory name of the root, which is arbitrary, will be called "Portable_Root" and
-the directory name of this git, which is also arbitrary, will be called "portablizer"
+the directory name of this git, which is also arbitrary, will be called "portable"
 
 >       Portable_Root/
->       |----portablizer/   
+>       |----portable/   
 >       |----|----scrips/
 >       |----|----|----callSetupLinux.sh
+>       |----|----|----callSetupMac.command
 >       |----|----|----callSetupWindows.bat
 >       |----|----|----customize_me.py
 >       |----|----|----generic_setup.py
@@ -234,13 +236,13 @@ the directory name of this git, which is also arbitrary, will be called "portabl
 >       |----|----|----README.md
 >       |----|----packages/
 
-After "callSetupWindows.bat" is called, the directory structure will look like the following:
-
+After "callSetupXXXs.bat" is called, the directory structure will look like the following:
 
 >       Portable_Root/
->       |----portablizer/   
+>       |----portable/   
 >       |----|----scrips/
 >       |----|----|----callSetupLinux.sh
+>       |----|----|----callSetupMac.command
 >       |----|----|----callSetupWindows.bat
 >       |----|----|----customize_me.py
 >       |----|----|----generic_setup.py
@@ -251,22 +253,17 @@ After "callSetupWindows.bat" is called, the directory structure will look like t
 >       |----sources/
 >       |----|----src/
 >       |----|----test/
->       |----Python3.9.4/
+>       |----XXX_Python3.9.4/
+
+where XXX is "win" for windows and "lin" for Mac & Linux
 
 So, at the top level, there are two new directories:
-* PythonXXX : the python version requested in the callSetupXXX file. Pyenv gets the possible
-version numbers from the site: https://www.python.org/ftp/python/
-* sources, as specified by the variable source_dirs in the callSetupXXX files. If sources/src 
-sources/test existed, then nothing will happen with them. 
+>XXX_PythonVVV
 
-In scripts/ there will also be a new directory. The name of the directory depends on the 
-OS in which the callSetupLinux was called. In case callSetupWindows as called, the directory
-"generatedDOSScripts" will be created. 
+The python version to use, is specified in the callSetupXXX file. Which versions are available is deteremined by Pyenv. Pyenv uses a subset of the versions numbers from the site: https://www.python.org/ftp/python/. To see that subset, download Pyenv and execute the command:
+>pyenv install -l 
 
-If the script callSetupXXX is called again, the only effect will be is that the directory 
-generateXXXScripts will be created again. 
-
-Once a new Pytho distribution is created. the script, in generateXXXScripts:
+Once a new Python distribution is created it is usually needed to updat the pip version in that distribution. In generateXXXScripts call:
 
 [py.handy_modules.update_pip.bat](py..handy_modules.update_pip.bat)
 
@@ -286,20 +283,17 @@ So at the prompt you can issue the command:
 pip install xxx 
 
 ## Installation
-Nothing needs to be �installed�. 
 
-## Usage
-
+As mentioned before, on Linux and Mac, please [**Install Python build dependencies**](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) first.
 
 
 ## Known issues
 
-There may be portability issues on Mac & linux.
-
+No known issues. Please notify me if any is found. 
 
 ## Contact / Getting help
 
-robert.brondijk@philips.com
+info@bronlib.com
 
 ## License
 
